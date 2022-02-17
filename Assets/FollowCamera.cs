@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class FollowCamera : MonoBehaviour
 {
-    private int cameraPositionZ = -10;
+    private Vector3 cameraOffSetPosition = new Vector3 (0, 0, -10);
     [SerializeField] GameObject thingToFollow;
 
     // Update is called once per frame
     void LateUpdate()
     {
-        transform.position = thingToFollow.transform.position + new Vector3 (0,0, cameraPositionZ);
+        transform.position = thingToFollow.transform.position + cameraOffSetPosition;
     }
 }
