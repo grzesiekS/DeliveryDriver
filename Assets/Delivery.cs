@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class Delivery : MonoBehaviour
 {
-    private string PACKAGE_TAG = "Package";
-    private string CUSTOMER_TAG = "Customer";
+    private string PackageTag = "Package";
+    private string CustomerTag = "Customer";
 
     [SerializeField] float destroyDelay = 0.2f;
+    [SerializeField] Color32 hasPackageColor = new Color32(255, 255, 255, 255);
+    [SerializeField] Color32 withoutPackageColor = new Color32(255, 255, 255, 255);
+
     bool hasPackage;
+    SpriteRenderer spriteRenderer;
+
+    void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -17,17 +26,19 @@ public class Delivery : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if(collider.tag == PACKAGE_TAG && !hasPackage)
+        if(collider.tag == PackageTag && !hasPackage)
         {
             Debug.Log("Package picked up");
             hasPackage = true;
+            spriteRenderer.color = hasPackageColor;
             Destroy(collider.gameObject, destroyDelay);
         }
 
-        if(collider.tag == CUSTOMER_TAG && hasPackage)
+        if(collider.tag == CustomerTag && hasPackage)
         {
             Debug.Log("Package delivered");
             hasPackage = false;
+            spriteRenderer.color = withoutPackageColor;
         }
     }
 }
